@@ -105,4 +105,16 @@ class RecordsTest extends EmittingTest {
     }');
     Assert::equals($expected, $t->newInstance(...$args)->display());
   }
+
+  #[@test]
+  public function can_use_untyped_varargs() {
+    $p= $this->type('record <T>(... $members) { }')->newInstance(1, 2, 3);
+    Assert::equals([1, 2, 3], $p->members());
+  }
+
+  #[@test]
+  public function can_use_typed_varargs() {
+    $p= $this->type('record <T>(int... $members) { }')->newInstance(1, 2, 3);
+    Assert::equals([1, 2, 3], $p->members());
+  }
 }

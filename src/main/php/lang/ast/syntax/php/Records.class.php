@@ -13,7 +13,7 @@ use lang\ast\nodes\{
   Variable
 };
 use lang\ast\syntax\Extension;
-use lang\ast\{Code, Type};
+use lang\ast\{Code, Type, ArrayType};
 
 class Records implements Extension {
 
@@ -82,8 +82,9 @@ class Records implements Extension {
         $constructor->body[]= new Assignment($r, '=', new Variable($c->name, $l), $l);
 
         // Property declaration + accessor method
-        $body[]= new Property(['private'], $c->name, $c->type, null, [], null, $l);
-        $body[]= new Method(['public'], $c->name, new Signature([], $c->type), [new ReturnStatement($r, $l)]);
+        $type= $c->variadic ? ($c->type ? new ArrayType($c->type) : new Type('array')) : $c->type;
+        $body[]= new Property(['private'], $c->name, $type, null, [], null, $l);
+        $body[]= new Method(['public'], $c->name, new Signature([], $type), [new ReturnStatement($r, $l)]);
 
         // Code for string representation, hashcode and comparison
         $string.= ', '.$c->name.'= ".\\util\\Objects::stringOf($this->'.$c->name.')."';
