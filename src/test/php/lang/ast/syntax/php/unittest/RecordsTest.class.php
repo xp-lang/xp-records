@@ -1,5 +1,6 @@
 <?php namespace lang\ast\syntax\php\unittest;
 
+use lang\ast\Errors;
 use lang\ast\unittest\emit\EmittingTest;
 use lang\{XPClass, IllegalArgumentException};
 use unittest\Assert;
@@ -23,6 +24,13 @@ class RecordsTest extends EmittingTest {
   public function can_extend_base_class() {
     $t= $this->type('record <T>(string $name) extends \\lang\\ast\\Node { }');
     Assert::equals(XPClass::forName('lang.ast.Node'), $t->getParentClass());
+  }
+
+  #[@test, @expect(['class' => Errors::class, 'withMessage' => '/Records cannot have a constructor/'])]
+  public function cannot_have_constructor() {
+    $this->type('record <T>(int $id) {
+      public function __construct() { }
+    }');
   }
 
   #[@test]

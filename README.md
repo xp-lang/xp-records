@@ -37,6 +37,20 @@ foreach ($r as $item) {
 
 *Note: The generated `toString()`, `hashCode()` and `compareTo()` methods may be overriden by supplying an implementation in the record body.*
 
+To verify constructor parameters, add an initialization block as follows:
+
+```php
+record Range(int $lo, int $hi) {
+  public function __init() {
+    if ($this->lo > $this->hi) {
+      throw new IllegalArgumentException('Lower border may not exceed upper border');
+    }
+  }
+}
+```
+
+This block is called *after* the members have been from the constructor parameters.
+
 Installation
 ------------
 After installing the XP Compiler into your project, also include this plugin.

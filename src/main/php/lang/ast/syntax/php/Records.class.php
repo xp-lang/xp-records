@@ -65,6 +65,10 @@ class Records implements Extension {
       $body= $this->typeBody($parse);
       $parse->expecting('}', 'record');
 
+      if (isset($body['__construct()'])) {
+        $parse->raise('Records cannot have a constructor, use __init()', 'record', $line);
+      }
+
       $return= new RecordDeclaration([], $type, $components, $parent, $implements, $body, $annotations, $comment, $line);
       return $return;
     });
@@ -72,8 +76,7 @@ class Records implements Extension {
     $emitter->transform('record', function($codegen, $node) {
       $body= $node->body;
       $string= $object= $value= '';
-
-      $body[]= $constructor= new Method(['public'], '__construct', new Signature($node->components, null), []);
+      $constructor= new Method(['public'], '__construct', new Signature($node->components, null), []);
       foreach ($node->components as $c) {
         $l= $c->line;
 
@@ -92,13 +95,14 @@ class Records implements Extension {
         $value.= ', $value->'.$c->name;
       }
 
-      // Inline initialization
+      // Create constructor, inlining __init()
       if (isset($body['__init()'])) {
         foreach ($body['__init()']->body as $statement) {
           $constructor->body[]= $statement;
         }
         unset($body['__init()']);
       }
+      $body['__construct()']= $constructor;
 
       // Implement lang.Value
       self::inject($body, 'toString', new Signature([], new Type('string')), new Code(
