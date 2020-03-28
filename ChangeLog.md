@@ -3,7 +3,7 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
-## 0.5.0 / 2020-03-28
+## 1.0.0 / 2020-03-28
 
 * Fixed issue #2: Add logic to constructor - @thekid
 
