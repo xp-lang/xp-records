@@ -32,6 +32,16 @@ class RecordsTest extends EmittingTest {
   }
 
   #[@test]
+  public function user_record_with_overridden_string_representation() {
+    $t= $this->type('record <T>(int $id, string $handle) {
+      public function toString() {
+        return nameof($this)."(#".$this->id.": ".$this->handle.")";
+      }
+    }');
+    Assert::equals($t->getName().'(#0: root)', $t->newInstance(0, 'root')->toString());
+  }
+
+  #[@test]
   public function hashcode() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
     Assert::equals(md5(Objects::hashOf([get_class($p), 1, 10])), $p->hashCode());

@@ -3,6 +3,13 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 0.3.0 / 2020-03-28
+
+* Fixed issue #1: Allow overriding default `lang.Value` method implementations
+  (@thekid)
+* Added return types to `toString()`, `hashCode()` and `compareTo()` methods
+  (@thekid)
+
 ## 0.2.0 / 2020-03-28
 
 * Used dotted class name inside `toString()`- @thekid

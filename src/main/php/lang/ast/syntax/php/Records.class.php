@@ -1,6 +1,5 @@
 <?php namespace lang\ast\syntax\php;
 
-use lang\ast\Code;
 use lang\ast\nodes\{
   Assignment,
   ClassDeclaration,
@@ -14,8 +13,14 @@ use lang\ast\nodes\{
   Variable
 };
 use lang\ast\syntax\Extension;
+use lang\ast\{Code, Type};
 
 class Records implements Extension {
+
+  public static function inject(&$type, $name, $signature, $body) {
+    $key= $name.'()';
+    isset($type[$key]) || $type[$key]= new Method(['public'], $name, $signature, [new ReturnStatement($body)]);
+  }
 
   public function setup($language, $emitter) {
     $language->stmt('record', function($parse, $token) {
@@ -64,18 +69,15 @@ class Records implements Extension {
       }
 
       // Implement lang.Value
-      $body[]= new Method(['public'], 'toString', new Signature([], null), [
-        new ReturnStatement(new Code('"'.strtr(substr($node->name, 1), '\\', '.').'('.substr($string, 2).')"'))
-      ]);
-      $body[]= new Method(['public'], 'hashCode', new Signature([], null), [
-        new ReturnStatement(new Code('md5(\\util\\Objects::hashOf(["'.substr($node->name, 1).'"'.$object.']))'))
-      ]);
-      $body[]= new Method(['public'], 'compareTo', new Signature([new Parameter('value', null)], null), [
-        new ReturnStatement(new Code('$value instanceof self
-          ? \\util\\Objects::compare(['.substr($object, 2).'], ['.substr($value, 2).'])
-          : 1
-        '))
-      ]);
+      self::inject($body, 'toString', new Signature([], new Type('string')), new Code(
+        '"'.strtr(substr($node->name, 1), '\\', '.').'('.substr($string, 2).')"'
+      ));
+      self::inject($body, 'hashCode', new Signature([], new Type('string')), new Code(
+        'md5(\\util\\Objects::hashOf(["'.substr($node->name, 1).'"'.$object.']))'
+      ));
+      self::inject($body, 'compareTo', new Signature([new Parameter('value', null)], new Type('int')), new Code(
+        '$value instanceof self ? \\util\\Objects::compare(['.substr($object, 2).'], ['.substr($value, 2).']) : 1'
+      ));
 
       return new ClassDeclaration(
         ['final'],
