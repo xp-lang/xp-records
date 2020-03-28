@@ -26,6 +26,18 @@ class RecordsTest extends EmittingTest {
   }
 
   #[@test]
+  public function can_declare_further_properties() {
+    $p= $this->type('record <T>(string $name) { public int $age= 0; }')->newInstance('Test');
+    Assert::equals(0, $p->age);
+  }
+
+  #[@test]
+  public function can_declare_further_methods() {
+    $p= $this->type('record <T>(string $name) { public function age() { return 0; } }')->newInstance('Test');
+    Assert::equals(0, $p->age());
+  }
+
+  #[@test]
   public function string_representation() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
     Assert::equals(nameof($p).'(x= 1, y= 10)', $p->toString());
