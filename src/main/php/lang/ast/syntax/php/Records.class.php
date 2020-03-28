@@ -37,6 +37,13 @@ class Records implements Extension {
       $components= $this->parameters($parse, []);
       $parse->expecting(')', 'record');
 
+      $parent= null;
+      if ('extends' === $parse->token->value) {
+        $parse->forward();
+        $parent= $parse->scope->resolve($parse->token->value);
+        $parse->forward();
+      }
+
       $implements= [];
       if ('implements' === $parse->token->value) {
         $parse->forward();
@@ -58,7 +65,7 @@ class Records implements Extension {
       $body= $this->typeBody($parse);
       $parse->expecting('}', 'record');
 
-      $return= new RecordDeclaration([], $type, $components, $implements, $body, $annotations, $comment, $line);
+      $return= new RecordDeclaration([], $type, $components, $parent, $implements, $body, $annotations, $comment, $line);
       return $return;
     });
 
@@ -98,7 +105,7 @@ class Records implements Extension {
       return new ClassDeclaration(
         ['final'],
         $node->name,
-        null,
+        $node->parent,
         array_merge(['\\lang\\Value'], $node->implements),
         $body,
         $node->annotations,

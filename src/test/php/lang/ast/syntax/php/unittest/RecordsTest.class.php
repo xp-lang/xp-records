@@ -20,6 +20,12 @@ class RecordsTest extends EmittingTest {
   }
 
   #[@test]
+  public function can_extend_base_class() {
+    $t= $this->type('record <T>(string $name) extends \\lang\\ast\\Node { }');
+    Assert::equals(XPClass::forName('lang.ast.Node'), $t->getParentClass());
+  }
+
+  #[@test]
   public function point_record() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
     Assert::equals([1, 10], [$p->x(), $p->y()]);

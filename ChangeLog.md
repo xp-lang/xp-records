@@ -5,6 +5,7 @@ XP records for PHP - ChangeLog
 
 ## 0.4.0 / 2020-03-28
 
+* Added ability for records to extend base classes - @thekid
 * Added ability for records to implement interfaces - @thekid
 
 ## 0.3.0 / 2020-03-28
