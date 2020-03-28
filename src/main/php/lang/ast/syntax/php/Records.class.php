@@ -65,7 +65,7 @@ class Records implements Extension {
 
       // Implement lang.Value
       $body[]= new Method(['public'], 'toString', new Signature([], null), [
-        new ReturnStatement(new Code('"'.substr($node->name, 1).'('.substr($string, 2).')"'))
+        new ReturnStatement(new Code('"'.strtr(substr($node->name, 1), '\\', '.').'('.substr($string, 2).')"'))
       ]);
       $body[]= new Method(['public'], 'hashCode', new Signature([], null), [
         new ReturnStatement(new Code('md5(\\util\\Objects::hashOf(["'.substr($node->name, 1).'"'.$object.']))'))

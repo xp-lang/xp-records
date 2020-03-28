@@ -28,7 +28,7 @@ class RecordsTest extends EmittingTest {
   #[@test]
   public function string_representation() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
-    Assert::equals(get_class($p).'(x= 1, y= 10)', $p->toString());
+    Assert::equals(nameof($p).'(x= 1, y= 10)', $p->toString());
   }
 
   #[@test]
