@@ -92,6 +92,14 @@ class Records implements Extension {
         $value.= ', $value->'.$c->name;
       }
 
+      // Inline initialization
+      if (isset($body['__init()'])) {
+        foreach ($body['__init()']->body as $statement) {
+          $constructor->body[]= $statement;
+        }
+        unset($body['__init()']);
+      }
+
       // Implement lang.Value
       self::inject($body, 'toString', new Signature([], new Type('string')), new Code(
         '"'.strtr(substr($node->name, 1), '\\', '.').'('.substr($string, 2).')"'

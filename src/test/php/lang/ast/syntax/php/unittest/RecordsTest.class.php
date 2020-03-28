@@ -1,7 +1,7 @@
 <?php namespace lang\ast\syntax\php\unittest;
 
-use lang\XPClass;
 use lang\ast\unittest\emit\EmittingTest;
+use lang\{XPClass, IllegalArgumentException};
 use unittest\Assert;
 use util\Objects;
 
@@ -116,5 +116,17 @@ class RecordsTest extends EmittingTest {
   public function can_use_typed_varargs() {
     $p= $this->type('record <T>(int... $members) { }')->newInstance(1, 2, 3);
     Assert::equals([1, 2, 3], $p->members());
+  }
+
+  #[@test, @expect(['class' => IllegalArgumentException::class, 'withMessage' => 'lo > hi!'])]
+  public function can_verify() {
+    $t= $this->type('record <T>(int $lo, int $hi) {
+      public function __init() {
+        if ($this->lo > $this->hi) {
+          throw new \\lang\\IllegalArgumentException("lo > hi!");
+        }
+      }
+    }');
+    $t->newInstance(5, 1);
   }
 }
