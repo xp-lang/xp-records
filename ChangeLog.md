@@ -3,6 +3,10 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 0.4.0 / 2020-03-28
+
+* Added ability for records to implement interfaces - @thekid
+
 ## 0.3.0 / 2020-03-28
 
 * Fixed issue #1: Allow overriding default `lang.Value` method implementations

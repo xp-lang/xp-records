@@ -16,9 +16,11 @@ Example
 // Declaration
 namespace com\example;
 
-record Range(int $lo, int $hi) {
-  public function distance(): int {
-    return $this->hi - $this->lo;
+record Range(int $lo, int $hi) implements \IteratorAggregate {
+  public function getIterator() {
+    for ($i= $this->lo; $i <= $this->hi; $i++) {
+      yield $i;
+    }
   }
 }
 
@@ -26,8 +28,11 @@ record Range(int $lo, int $hi) {
 $r= new Range(1, 10);
 $r->lo();       // 1
 $r->hi();       // 10
-$r->distance(); // 9
 $r->toString(); // "com.example.Range(lo= 1, hi= 10)"
+
+foreach ($r as $item) {
+  // 1, 2, 3, ... 10
+}
 ```
 
 *Note: The generated `toString()`, `hashCode()` and `compareTo()` methods may be overriden by supplying an implementation in the record body.*

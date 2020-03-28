@@ -38,6 +38,18 @@ class RecordsTest extends EmittingTest {
   }
 
   #[@test]
+  public function can_implement_interfaces() {
+    $t= $this->type('record <T>(int $lo, int $hi) implements \IteratorAggregate {
+      public function getIterator() {
+        for ($i= $this->lo; $i <= $this->hi; $i++) {
+          yield $i;
+        }
+      }
+    }');
+    Assert::equals([1, 2, 3, 4, 5], iterator_to_array($t->newInstance(1, 5)));
+  }
+
+  #[@test]
   public function string_representation() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
     Assert::equals(nameof($p).'(x= 1, y= 10)', $p->toString());
