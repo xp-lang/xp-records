@@ -14,6 +14,12 @@ class RecordsTest extends EmittingTest {
   }
 
   #[@test]
+  public function is_final() {
+    $t= $this->type('record <T>(int $x, int $y) { }');
+    Assert::equals(MODIFIER_FINAL | MODIFIER_PUBLIC, $t->getModifiers());
+  }
+
+  #[@test]
   public function point_record() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
     Assert::equals([1, 10], [$p->x(), $p->y()]);

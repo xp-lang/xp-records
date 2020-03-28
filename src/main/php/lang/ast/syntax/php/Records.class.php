@@ -78,7 +78,7 @@ class Records implements Extension {
       ]);
 
       return new ClassDeclaration(
-        $node->modifiers,
+        ['final'],
         $node->name,
         null,
         ['\\lang\\Value'],
