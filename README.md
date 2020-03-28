@@ -50,3 +50,4 @@ See also
 --------
 * [Kotlin Data Classes](https://kotlinlang.org/docs/reference/data-classes.html)
 * [Java 14 Feature Spotlight: Records](https://www.infoq.com/articles/java-14-feature-spotlight/)
+* [C# structs](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/struct)
