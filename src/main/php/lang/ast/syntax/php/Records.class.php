@@ -17,6 +17,7 @@ use lang\ast\{Code, Type, ArrayType};
 
 class Records implements Extension {
 
+  /** Injects a method if it does not exist yet */
   public static function inject(&$type, $name, $signature, $body) {
     $key= $name.'()';
     isset($type[$key]) || $type[$key]= new Method(['public'], $name, $signature, [new ReturnStatement($body)]);
