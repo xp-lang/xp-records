@@ -14,9 +14,10 @@ Example
 
 ```php
 // Declaration
-record Range(int $lo, int $hi) {
+namespace com\example;
 
-  public function distance() {
+record Range(int $lo, int $hi) {
+  public function distance(): int {
     return $this->hi - $this->lo;
   }
 }
@@ -26,7 +27,7 @@ $r= new Range(1, 10);
 $r->lo();       // 1
 $r->hi();       // 10
 $r->distance(); // 9
-$r->toString(); // "Range(lo= 1, hi= 10)"
+$r->toString(); // "com.example.Range(lo= 1, hi= 10)"
 ```
 
 Installation
