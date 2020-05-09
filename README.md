@@ -40,6 +40,8 @@ foreach ($r as $item) {
 To verify constructor parameters, add an initialization block as follows:
 
 ```php
+use lang\IllegalArgumentException;
+
 record Range(int $lo, int $hi) {
   public function __init() {
     if ($this->lo > $this->hi) {
