@@ -3,6 +3,12 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 1.0.1 / 2020-05-10
+
+* Merged PR #3: Pass enclosing type to typeBody(), adjusting this
+  library in a forward compatible manner w/ upcoming compiler changes
+  (@thekid)
+
 ## 1.0.0 / 2020-03-28
 
 * Fixed issue #2: Add logic to constructor - @thekid
