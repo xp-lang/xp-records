@@ -63,7 +63,7 @@ class Records implements Extension {
 
       // Type body
       $parse->expecting('{', 'record');
-      $body= $this->typeBody($parse);
+      $body= $this->typeBody($parse, $type);
       $parse->expecting('}', 'record');
 
       if (isset($body['__construct()'])) {
