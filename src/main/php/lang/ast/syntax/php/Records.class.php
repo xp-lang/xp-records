@@ -13,7 +13,8 @@ use lang\ast\nodes\{
   Variable
 };
 use lang\ast\syntax\Extension;
-use lang\ast\{Code, Type, ArrayType};
+use lang\ast\types\IsArray;
+use lang\ast\{Code, Type};
 
 class Records implements Extension {
 
@@ -29,9 +30,7 @@ class Records implements Extension {
       $parse->forward();
 
       $comment= $parse->comment;
-      $annotations= $parse->scope->annotations;
       $parse->comment= null;
-      $parse->scope->annotations= [];
       $line= $parse->token->line;
 
       $parse->expecting('(', 'record');
@@ -70,7 +69,7 @@ class Records implements Extension {
         $parse->raise('Records cannot have a constructor, use __init()', 'record', $line);
       }
 
-      $return= new RecordDeclaration([], $type, $components, $parent, $implements, $body, $annotations, $comment, $line);
+      $return= new RecordDeclaration([], $type, $components, $parent, $implements, $body, [], $comment, $line);
       return $return;
     });
 
@@ -86,7 +85,7 @@ class Records implements Extension {
         $constructor->body[]= new Assignment($r, '=', new Variable($c->name, $l), $l);
 
         // Property declaration + accessor method
-        $type= $c->variadic ? ($c->type ? new ArrayType($c->type) : new Type('array')) : $c->type;
+        $type= $c->variadic ? ($c->type ? new IsArray($c->type) : new Type('array')) : $c->type;
         $body[]= new Property(['private'], $c->name, $type, null, [], null, $l);
         $body[]= new Method(['public'], $c->name, new Signature([], $type), [new ReturnStatement($r, $l)]);
 
