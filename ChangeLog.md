@@ -3,6 +3,10 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 1.1.0 / 2020-10-18
+
+* Merged PR #4: Add ability to use visibility modifiers - @thekid
+
 ## 1.0.2 / 2020-10-01
 
 * Fixed "Undefined property: lang\ast\Scope::$annotations" warnings
