@@ -131,4 +131,10 @@ class RecordsTest extends EmittingTest {
     }');
     $t->newInstance(5, 1);
   }
+
+  #[Test]
+  public function modifiers_can_be_used() {
+    $t= $this->type('record <T>(protected string $name) { }');
+    Assert::equals(MODIFIER_PROTECTED, $t->getField('name')->getModifiers());
+  }
 }
