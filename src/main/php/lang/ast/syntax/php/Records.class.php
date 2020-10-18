@@ -69,16 +69,20 @@ class Records implements Extension {
         $parse->raise('Records cannot have a constructor, use __init()', 'record', $line);
       }
 
-      $return= new RecordDeclaration([], $type, $components, $parent, $implements, $body, [], $comment, $line);
-      return $return;
+      return new RecordDeclaration([], $type, $components, $parent, $implements, $body, [], $comment, $line);
     });
 
     $emitter->transform('record', function($codegen, $node) {
       $body= $node->body;
       $string= $object= $value= '';
-      $constructor= new Method(['public'], '__construct', new Signature($node->components, null), []);
+      $signature= new Signature([], null);
+      $constructor= new Method(['public'], '__construct', $signature, []);
       foreach ($node->components as $c) {
         $l= $c->line;
+
+        $modifiers= $c->promote ?? 'private';
+        $c->promote= null;
+        $signature->parameters[]= $c;
 
         // Assigment inside constructor
         $r= new InstanceExpression(new Variable('this', $l), new Literal($c->name, $l), $l);
@@ -86,7 +90,7 @@ class Records implements Extension {
 
         // Property declaration + accessor method
         $type= $c->variadic ? ($c->type ? new IsArray($c->type) : new Type('array')) : $c->type;
-        $body[]= new Property(['private'], $c->name, $type, null, [], null, $l);
+        $body[]= new Property([$modifiers], $c->name, $type, null, [], null, $l);
         $body[]= new Method(['public'], $c->name, new Signature([], $type), [new ReturnStatement($r, $l)]);
 
         // Code for string representation, hashcode and comparison
