@@ -5,7 +5,7 @@ XP records for PHP - ChangeLog
 
 ## 1.1.1 / 2020-11-15
 
-* Refactor to use more specific `lang.ast.types.IsLiteral` instead of
+* Refactored to use more specific `lang.ast.types.IsLiteral` instead of
   the base class `lang.ast.Type`
   (@thekid)
 
