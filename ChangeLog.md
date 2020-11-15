@@ -3,6 +3,12 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 1.1.1 / 2020-11-15
+
+* Refactor to use more specific `lang.ast.types.IsLiteral` instead of
+  the base class `lang.ast.Type`
+  (@thekid)
+
 ## 1.1.0 / 2020-10-18
 
 * Merged PR #4: Add ability to use visibility modifiers - @thekid

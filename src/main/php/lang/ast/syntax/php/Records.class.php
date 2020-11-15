@@ -1,5 +1,6 @@
 <?php namespace lang\ast\syntax\php;
 
+use lang\ast\Code;
 use lang\ast\nodes\{
   Assignment,
   ClassDeclaration,
@@ -13,8 +14,7 @@ use lang\ast\nodes\{
   Variable
 };
 use lang\ast\syntax\Extension;
-use lang\ast\types\IsArray;
-use lang\ast\{Code, Type};
+use lang\ast\types\{IsArray, IsLiteral};
 
 class Records implements Extension {
 
@@ -89,7 +89,7 @@ class Records implements Extension {
         $constructor->body[]= new Assignment($r, '=', new Variable($c->name, $l), $l);
 
         // Property declaration + accessor method
-        $type= $c->variadic ? ($c->type ? new IsArray($c->type) : new Type('array')) : $c->type;
+        $type= $c->variadic ? ($c->type ? new IsArray($c->type) : new IsLiteral('array')) : $c->type;
         $body[]= new Property([$modifiers], $c->name, $type, null, [], null, $l);
         $body[]= new Method(['public'], $c->name, new Signature([], $type), [new ReturnStatement($r, $l)]);
 
@@ -109,13 +109,13 @@ class Records implements Extension {
       $body['__construct()']= $constructor;
 
       // Implement lang.Value
-      self::inject($body, 'toString', new Signature([], new Type('string')), new Code(
+      self::inject($body, 'toString', new Signature([], new IsLiteral('string')), new Code(
         '"'.strtr(substr($node->name, 1), '\\', '.').'('.substr($string, 2).')"'
       ));
-      self::inject($body, 'hashCode', new Signature([], new Type('string')), new Code(
+      self::inject($body, 'hashCode', new Signature([], new IsLiteral('string')), new Code(
         'md5(\\util\\Objects::hashOf(["'.substr($node->name, 1).'"'.$object.']))'
       ));
-      self::inject($body, 'compareTo', new Signature([new Parameter('value', null)], new Type('int')), new Code(
+      self::inject($body, 'compareTo', new Signature([new Parameter('value', null)], new IsLiteral('int')), new Code(
         '$value instanceof self ? \\util\\Objects::compare(['.substr($object, 2).'], ['.substr($value, 2).']) : 1'
       ));
 
