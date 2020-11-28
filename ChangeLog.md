@@ -3,6 +3,10 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 1.2.0 / 2020-11-28
+
+* Made compatible with XP Compiler version 6.0.0 - @thekid
+
 ## 1.1.1 / 2020-11-15
 
 * Refactored to use more specific `lang.ast.types.IsLiteral` instead of
