@@ -1,10 +1,11 @@
 XP records for PHP
 ==================
 
-[![Build Status on TravisCI](https://secure.travis-ci.org/xp-lang/xp-records.svg)](http://travis-ci.org/xp-lang/xp-records)
+[![Build status on GitHub](https://github.com/xp-lang/xp-records/workflows/Tests/badge.svg)](https://github.com/xp-lang/xp-records/actions)
 [![XP Framework Module](https://raw.githubusercontent.com/xp-framework/web/master/static/xp-framework-badge.png)](https://github.com/xp-framework/core)
 [![BSD Licence](https://raw.githubusercontent.com/xp-framework/web/master/static/licence-bsd.png)](https://github.com/xp-framework/core/blob/master/LICENCE.md)
-[![Requires PHP 7.0+](https://raw.githubusercontent.com/xp-framework/web/master/static/php-7_0plus.png)](http://php.net/)
+[![Requires PHP 7.0+](https://raw.githubusercontent.com/xp-framework/web/master/static/php-7_0plus.svg)](http://php.net/)
+[![Supports PHP 8.0+](https://raw.githubusercontent.com/xp-framework/web/master/static/php-8_0plus.svg)](http://php.net/)
 [![Latest Stable Version](https://poser.pugx.org/xp-lang/xp-records/version.png)](https://packagist.org/packages/xp-lang/xp-records)
 
 Plugin for the [XP Compiler](https://github.com/xp-framework/compiler/) which adds a `record` syntax to the PHP language. Records declare a final class with immutable components for each of its members and appropriate accessors and a constructor, which implements the `lang.Value` interface.
