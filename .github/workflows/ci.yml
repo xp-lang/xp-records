@@ -53,7 +53,8 @@ jobs:
       run: >
         curl -sSL https://baltocdn.com/xp-framework/xp-runners/distribution/downloads/e/entrypoint/xp-run-8.5.3.sh > xp-run &&
         composer install --prefer-dist &&
-        echo "vendor/autoload.php" > composer.pth
+        echo "vendor/autoload.php" > composer.pth &&
+        echo "vendor/xp-framework/compiler/src/test/php" >> composer.pth
 
     - name: Run test suite
       run: sh xp-run xp.unittest.TestRunner src/test/php
