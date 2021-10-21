@@ -54,7 +54,7 @@ class RecordsTest extends EmittingTest {
   #[Test]
   public function can_implement_interfaces() {
     $t= $this->type('record <T>(int $lo, int $hi) implements \IteratorAggregate {
-      public function getIterator() {
+      public function getIterator(): \Traversable {
         for ($i= $this->lo; $i <= $this->hi; $i++) {
           yield $i;
         }
