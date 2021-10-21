@@ -3,6 +3,10 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 1.2.1 / 2021-10-21
+
+* Made compatible with XP 11, Compiler version 7.0.0 - @thekid
+
 ## 1.2.0 / 2020-11-28
 
 * Made compatible with XP Compiler version 6.0.0 - @thekid
