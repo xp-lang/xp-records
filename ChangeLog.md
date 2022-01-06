@@ -3,6 +3,11 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.0.0 / 2022-??-??
+
+* Changed string representation to resemble PHP 8 named arguments
+  (@thekid)
+
 ## 1.2.1 / 2021-10-21
 
 * Made compatible with XP 11, Compiler version 7.0.0 - @thekid

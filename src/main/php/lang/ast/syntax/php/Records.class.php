@@ -94,7 +94,7 @@ class Records implements Extension {
         $body[]= new Method(['public'], $c->name, new Signature([], $type), [new ReturnStatement($r, $l)]);
 
         // Code for string representation, hashcode and comparison
-        $string.= ', '.$c->name.'= ".\\util\\Objects::stringOf($this->'.$c->name.')."';
+        $string.= ', '.$c->name.': ".\\util\\Objects::stringOf($this->'.$c->name.')."';
         $object.= ', $this->'.$c->name;
         $value.= ', $value->'.$c->name;
       }
