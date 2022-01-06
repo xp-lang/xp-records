@@ -69,7 +69,7 @@ class Records implements Extension {
         $parse->raise('Records cannot have a constructor, use __init()', 'record', $line);
       }
 
-      return new RecordDeclaration([], $type, $components, $parent, $implements, $body, [], $comment, $line);
+      return new RecordDeclaration([], $type, $components, $parent, $implements, $body, null, $comment, $line);
     });
 
     $emitter->transform('record', function($codegen, $node) {
