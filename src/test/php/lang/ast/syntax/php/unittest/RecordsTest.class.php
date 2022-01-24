@@ -137,4 +137,11 @@ class RecordsTest extends EmittingTest {
     $t= $this->type('record <T>(protected string $name) { }');
     Assert::equals(MODIFIER_PROTECTED, $t->getField('name')->getModifiers());
   }
+
+  #[Test]
+  public function can_have_initial_values() {
+    $t= $this->type('record <T>(array $list= [0]) { }');
+    Assert::equals([0], $t->getField('list')->setAccessible(true)->get($t->newInstance()));
+    Assert::equals([1, 2, 3], $t->getField('list')->setAccessible(true)->get($t->newInstance([1, 2, 3])));
+  }
 }
