@@ -3,8 +3,11 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
-## 2.0.0 / 2022-??-??
+## 2.0.0 / 2022-01-24
 
+* Made compatible with compiler version 8.0.0, and dropped support
+  for versions older than 7.0.0.
+  (@thekid)
 * Changed string representation to resemble PHP 8 named arguments
   (@thekid)
 
