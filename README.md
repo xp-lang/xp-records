@@ -29,7 +29,7 @@ record Range(int $lo, int $hi) implements \IteratorAggregate {
 $r= new Range(1, 10);
 $r->lo();       // 1
 $r->hi();       // 10
-$r->toString(); // "com.example.Range(lo= 1, hi= 10)"
+$r->toString(); // "com.example.Range(lo: 1, hi: 10)"
 
 foreach ($r as $item) {
   // 1, 2, 3, ... 10
