@@ -52,7 +52,7 @@ record Range(int $lo, int $hi) {
 }
 ```
 
-This block is called *after* the members have been from the constructor parameters.
+This block is called *after* the members have been initialized from the constructor parameters.
 
 Installation
 ------------
