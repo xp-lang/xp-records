@@ -66,7 +66,11 @@ To decompose a record into its members, use the `decompose()` method:
 // Using the declaration from above:
 $r= new Range(1, 10);
 
+// Use https://wiki.php.net/rfc/short_list_syntax (>= PHP 7.1)
 [$lo, $hi]= $r->decompose();
+
+// Optionally map the members, returns the string "1..10"
+$string= $r->decompose(fn($lo, $hi) => "{$lo}..{$hi}");
 ```
 
 Installation
