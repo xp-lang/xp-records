@@ -76,4 +76,4 @@ See also
 * [Java 14 Records](https://docs.oracle.com/en/java/javase/14/language/records.html)
 * [Java 14 Feature Spotlight: Records](https://www.infoq.com/articles/java-14-feature-spotlight/)
 * [C# structs](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/struct)
-* [C# records proposal](https://github.com/dotnet/csharplang/blob/master/proposals/records.md)
+* [C# records](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record)
