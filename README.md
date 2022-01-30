@@ -17,8 +17,10 @@ Example
 // Declaration
 namespace com\example;
 
-record Range(int $lo, int $hi) implements \IteratorAggregate {
-  public function getIterator(): \Traversable {
+use IteratorAggregate, Traversable;
+
+record Range(int $lo, int $hi) implements IteratorAggregate {
+  public function getIterator(): Traversable {
     for ($i= $this->lo; $i <= $this->hi; $i++) {
       yield $i;
     }
