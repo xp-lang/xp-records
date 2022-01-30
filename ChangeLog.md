@@ -3,6 +3,11 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Implemented feature suggested in #6: Add `decompose()` method to
+  records which will return and optionally map its members. Inspired
+  by https://benjiweber.co.uk/blog/2020/09/19/fun-with-java-records/
+  (@thekid)
+
 ## 2.0.0 / 2022-01-24
 
 * Made compatible with compiler version 8.0.0, and dropped support
