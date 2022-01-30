@@ -58,9 +58,9 @@ record Range(int $lo, int $hi) {
 
 This block is called *after* the members have been initialized from the constructor parameters.
 
-Decomposition
+Destructuring
 -------------
-To decompose a record into its members, use the `decompose()` method:
+To destructure a record into its members, use the `decompose()` method:
 
 ```php
 // Using the declaration from above:
