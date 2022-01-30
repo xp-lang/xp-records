@@ -119,6 +119,11 @@ class Records implements Extension {
         '$value instanceof self ? \\util\\Objects::compare(['.substr($object, 2).'], ['.substr($value, 2).']) : 1'
       ));
 
+      // Add decomposition
+      self::inject($body, 'decompose', new Signature([new Parameter('map', new IsLiteral('callable'), new Literal('null'))], null), new Code(
+        'null === $map ? ['.substr($object, 2).'] : $map('.substr($object, 2).')'
+      ));
+
       return new ClassDeclaration(
         ['final'],
         $node->name,
