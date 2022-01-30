@@ -40,6 +40,8 @@ foreach ($r as $item) {
 
 *Note: The generated `toString()`, `hashCode()` and `compareTo()` methods may be overriden by supplying an implementation in the record body.*
 
+Initialization
+--------------
 To verify constructor parameters, add an initialization block as follows:
 
 ```php
@@ -55,6 +57,17 @@ record Range(int $lo, int $hi) {
 ```
 
 This block is called *after* the members have been initialized from the constructor parameters.
+
+Decomposition
+-------------
+To decompose a record into its members, use the `decompose()` method:
+
+```php
+// Using the declaration from above:
+$r= new Range(1, 10);
+
+[$lo, $hi]= $r->decompose();
+```
 
 Installation
 ------------
