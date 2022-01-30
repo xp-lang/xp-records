@@ -136,6 +136,7 @@ class RecordsTest extends EmittingTest {
   public function init_function_does_not_conflict_with_initializer_block() {
     $t= $this->type('record <T>(int $lo, int $hi) {
       public static $NONE= new self(0, 0); // Run inside initializer block "__init"
+      public $initialized= false;
 
       public function __init() {
         $this->initialized= true;
@@ -167,5 +168,19 @@ class RecordsTest extends EmittingTest {
     $t= $this->type('record <T>(array $list= [0]) { }');
     Assert::equals([0], $t->getField('list')->setAccessible(true)->get($t->newInstance()));
     Assert::equals([1, 2, 3], $t->getField('list')->setAccessible(true)->get($t->newInstance([1, 2, 3])));
+  }
+
+  #[Test]
+  public function decompose_point_record() {
+    $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
+    Assert::equals([1, 10], $p->decompose());
+  }
+
+  #[Test]
+  public function decompose_and_map_person_record() {
+    $p= $this->type('record <T>(string $name, int $age) { }')->newInstance('Test', 1);
+    Assert::equals('Test is 1 year(s) old', $p->decompose(function($name, $age) {
+      return "{$name} is {$age} year(s) old";
+    }));
   }
 }
