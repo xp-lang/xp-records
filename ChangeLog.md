@@ -3,7 +3,9 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
-* Implemented feature suggested in #6: Add `decompose()` method to
+## 2.1.0 / 2022-02-03
+
+* Implemented feature suggested in #6: Add destructuring ability to
   records which will return and optionally map its members. Inspired
   by https://benjiweber.co.uk/blog/2020/09/19/fun-with-java-records/
   (@thekid)
