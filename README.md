@@ -48,7 +48,7 @@ To verify constructor parameters, add an initialization block as follows:
 use lang\IllegalArgumentException;
 
 record Range(int $lo, int $hi) {
-  public function __init() {
+  init {
     if ($this->lo > $this->hi) {
       throw new IllegalArgumentException('Lower border may not exceed upper border');
     }
