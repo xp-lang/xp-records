@@ -1,5 +1,6 @@
 <?php namespace lang\ast\syntax\php\unittest;
 
+use lang\Error;
 use lang\ast\Errors;
 use lang\ast\unittest\emit\EmittingTest;
 use lang\{IllegalArgumentException, XPClass};
@@ -182,5 +183,11 @@ class RecordsTest extends EmittingTest {
     Assert::equals('Test is 1 year(s) old', $p(function($name, $age) {
       return "{$name} is {$age} year(s) old";
     }));
+  }
+
+  #[Test, Expect(class: Error::class, withMessage: '/Argument.+must.+callable/')]
+  public function destructure_with_incorrect_mapper() {
+    $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
+    $p('not.callable');
   }
 }
