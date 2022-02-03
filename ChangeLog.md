@@ -3,6 +3,11 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.2.0 / 2022-02-03
+
+* Merged PR #8: Replace `__init()` function with `init { }` blocks
+  (@thekid)
+
 ## 2.1.0 / 2022-02-03
 
 * Implemented feature suggested in #6: Add destructuring ability to
