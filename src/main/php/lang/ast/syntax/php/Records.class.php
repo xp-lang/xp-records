@@ -66,10 +66,22 @@ class Records implements Extension {
       $parse->expecting('}', 'record');
 
       if (isset($body['__construct()'])) {
-        $parse->raise('Records cannot have a constructor, use __init()', 'record', $line);
+        $parse->raise('Records cannot have a constructor, use init { }', 'record', $line);
       }
 
       return new RecordDeclaration([], $type, $components, $parent, $implements, $body, null, $comment, $line);
+    });
+
+    // Initializer block
+    $language->body('init', function($parse, &$body, $meta, $modifiers, $holder) {
+      $line= $parse->token->line;
+      $parse->forward();
+
+      $parse->expecting('{', 'initializer block');
+      $statements= $this->statements($parse);
+      $parse->expecting('}', 'initializer block');
+
+      $body['<init>']= $statements;
     });
 
     $emitter->transform('record', function($codegen, $node) {
@@ -99,8 +111,14 @@ class Records implements Extension {
         $value.= ', $value->'.$c->name;
       }
 
-      // Create constructor, inlining __init()
-      if (isset($body['__init()'])) {
+      // Create constructor, inlining <init>. Also support deprecated __init() function
+      if (isset($body['<init>'])) {
+        foreach ($body['<init>'] as $statement) {
+          $constructor->body[]= $statement;
+        }
+        unset($body['<init>']);
+      } else if (isset($body['__init()'])) {
+        trigger_error('Use init { } instead', E_USER_DEPRECATED);
         foreach ($body['__init()']->body as $statement) {
           $constructor->body[]= $statement;
         }

@@ -122,6 +122,19 @@ class RecordsTest extends EmittingTest {
   }
 
   #[Test]
+  public function can_have_init_block() {
+    $t= $this->type('record <T>(int $lo, int $hi) {
+      public $initialized= false;
+
+      init {
+        $this->initialized= true;
+      }
+    }');
+    Assert::true($t->newInstance(1, 2)->initialized);
+  }
+
+  /** @deprecated */
+  #[Test]
   public function can_have_init_function() {
     $t= $this->type('record <T>(int $lo, int $hi) {
       public $initialized= false;
@@ -131,8 +144,10 @@ class RecordsTest extends EmittingTest {
       }
     }');
     Assert::true($t->newInstance(1, 2)->initialized);
+    \xp::gc();
   }
 
+  /** @deprecated */
   #[Test]
   public function init_function_does_not_conflict_with_initializer_block() {
     $t= $this->type('record <T>(int $lo, int $hi) {
@@ -144,12 +159,13 @@ class RecordsTest extends EmittingTest {
       }
     }');
     Assert::true($t->getField('NONE')->get(null)->initialized);
+    \xp::gc();
   }
 
   #[Test, Expect(class: IllegalArgumentException::class, withMessage: 'lo > hi!')]
   public function can_verify() {
     $t= $this->type('record <T>(int $lo, int $hi) {
-      public function __init() {
+      init {
         if ($this->lo > $this->hi) {
           throw new \\lang\\IllegalArgumentException("lo > hi!");
         }
