@@ -60,17 +60,17 @@ This block is called *after* the members have been initialized from the construc
 
 Destructuring
 -------------
-To destructure a record into its members, use the `decompose()` method:
+To destructure a record into its members, use the invocation syntax:
 
 ```php
 // Using the declaration from above:
 $r= new Range(1, 10);
 
 // Use https://wiki.php.net/rfc/short_list_syntax (>= PHP 7.1)
-[$lo, $hi]= $r->decompose();
+[$lo, $hi]= $r();
 
 // Optionally map the members, returns the string "1..10"
-$string= $r->decompose(fn($lo, $hi) => "{$lo}..{$hi}");
+$string= $r(fn($lo, $hi) => "{$lo}..{$hi}");
 ```
 
 Installation

@@ -120,7 +120,7 @@ class Records implements Extension {
       ));
 
       // Add decomposition
-      self::inject($body, 'decompose', new Signature([new Parameter('map', new IsLiteral('callable'), new Literal('null'))], null), new Code(
+      self::inject($body, '__invoke', new Signature([new Parameter('map', new IsLiteral('callable'), new Literal('null'))], null), new Code(
         'null === $map ? ['.substr($object, 2).'] : $map('.substr($object, 2).')'
       ));
 

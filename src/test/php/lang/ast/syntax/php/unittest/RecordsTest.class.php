@@ -171,15 +171,15 @@ class RecordsTest extends EmittingTest {
   }
 
   #[Test]
-  public function decompose_point_record() {
+  public function destructure_point_record() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
-    Assert::equals([1, 10], $p->decompose());
+    Assert::equals([1, 10], $p());
   }
 
   #[Test]
-  public function decompose_and_map_person_record() {
+  public function destructure_and_map_person_record() {
     $p= $this->type('record <T>(string $name, int $age) { }')->newInstance('Test', 1);
-    Assert::equals('Test is 1 year(s) old', $p->decompose(function($name, $age) {
+    Assert::equals('Test is 1 year(s) old', $p(function($name, $age) {
       return "{$name} is {$age} year(s) old";
     }));
   }
