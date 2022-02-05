@@ -3,6 +3,10 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.3.0 / 2022-02-05
+
+* Add support for `readonly` record parameters. See issue #7 - @thekid
+
 ## 2.2.0 / 2022-02-03
 
 * Merged PR #8: Replace `__init()` function with `init { }` blocks

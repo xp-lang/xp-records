@@ -35,6 +35,30 @@ class RecordsTest extends EmittingTest {
   }
 
   #[Test]
+  public function fields_are_private_by_default() {
+    $t= $this->type('record <T>(string $name) { }');
+    Assert::equals(MODIFIER_PRIVATE, $t->getField('name')->getModifiers());
+  }
+
+  #[Test]
+  public function can_declare_field_modifiers() {
+    $t= $this->type('record <T>(public string $name) { }');
+    Assert::equals(MODIFIER_PUBLIC, $t->getField('name')->getModifiers());
+  }
+
+  #[Test]
+  public function can_have_readonly_fields() {
+    $t= $this->type('record <T>(public readonly string $name) { }');
+    Assert::equals(MODIFIER_PUBLIC | MODIFIER_READONLY, $t->getField('name')->getModifiers());
+  }
+
+  #[Test, Expect(class: Error::class, withMessage: '/Cannot modify readonly property .+name/')]
+  public function writing_to_readonly_field() {
+    $t= $this->type('record <T>(public readonly string $name) { }');
+    $t->newInstance('Test')->name= 'Modified';
+  }
+
+  #[Test]
   public function point_record() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
     Assert::equals([1, 10], [$p->x(), $p->y()]);
