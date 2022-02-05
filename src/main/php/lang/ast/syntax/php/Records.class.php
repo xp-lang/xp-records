@@ -92,7 +92,7 @@ class Records implements Extension {
       foreach ($node->components as $c) {
         $l= $c->line;
 
-        $modifiers= $c->promote ?? 'private';
+        $modifiers= null === $c->promote ? ['private'] : explode(' ', $c->promote);
         $c->promote= null;
         $signature->parameters[]= $c;
 
@@ -102,7 +102,7 @@ class Records implements Extension {
 
         // Property declaration + accessor method
         $type= $c->variadic ? ($c->type ? new IsArray($c->type) : new IsLiteral('array')) : $c->type;
-        $body[]= new Property([$modifiers], $c->name, $type, null, [], null, $l);
+        $body[]= new Property($modifiers, $c->name, $type, null, [], null, $l);
         $body[]= new Method(['public'], $c->name, new Signature([], $type), [new ReturnStatement($r, $l)]);
 
         // Code for string representation, hashcode and comparison
