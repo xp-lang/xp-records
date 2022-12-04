@@ -14,7 +14,7 @@ use lang\ast\nodes\{
   Variable
 };
 use lang\ast\syntax\Extension;
-use lang\ast\types\{IsArray, IsLiteral};
+use lang\ast\types\{IsArray, IsLiteral, IsValue};
 
 class Records implements Extension {
 
@@ -26,13 +26,11 @@ class Records implements Extension {
 
   public function setup($language, $emitter) {
     $language->stmt('record', function($parse, $token) {
-      $type= $parse->scope->resolve($parse->token->value);
-      $parse->forward();
-
       $comment= $parse->comment;
-      $parse->comment= null;
       $line= $parse->token->line;
+      $parse->comment= null;
 
+      $type= $this->type($parse, false);
       $parse->expecting('(', 'record');
       $components= $this->parameters($parse, []);
       $parse->expecting(')', 'record');
@@ -40,16 +38,14 @@ class Records implements Extension {
       $parent= null;
       if ('extends' === $parse->token->value) {
         $parse->forward();
-        $parent= $parse->scope->resolve($parse->token->value);
-        $parse->forward();
+        $parent= $this->type($parse, false);
       }
 
       $implements= [];
       if ('implements' === $parse->token->value) {
         $parse->forward();
         do {
-          $implements[]= $parse->scope->resolve($parse->token->value);
-          $parse->forward();
+          $implements[]= $this->type($parse, false);
           if (',' === $parse->token->value) {
             $parse->forward();
           } else if ('{' === $parse->token->value) {
@@ -136,6 +132,7 @@ class Records implements Extension {
       self::inject($body, 'compareTo', new Signature([new Parameter('value', null)], new IsLiteral('int')), new Code(
         '$value instanceof self ? \\util\\Objects::compare(['.substr($object, 2).'], ['.substr($value, 2).']) : 1'
       ));
+      $node->implements[]= new IsValue('\\lang\\Value');
 
       // Add decomposition
       self::inject($body, '__invoke', new Signature([new Parameter('map', new IsLiteral('callable'), new Literal('null'))], null), new Code(
@@ -146,7 +143,7 @@ class Records implements Extension {
         ['final'],
         $node->name,
         $node->parent,
-        array_merge(['\\lang\\Value'], $node->implements),
+        $node->implements,
         $body,
         $node->annotations,
         $node->comment,

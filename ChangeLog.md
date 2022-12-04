@@ -3,6 +3,10 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 2.4.0 / 2022-12-04
+
+* Adapt to AST type refactoring (xp-framework/ast#39) - @thekid
+
 ## 2.3.0 / 2022-02-05
 
 * Add support for `readonly` record parameters. See issue #7 - @thekid
