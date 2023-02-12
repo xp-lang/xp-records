@@ -4,7 +4,7 @@ use lang\Error;
 use lang\ast\Errors;
 use lang\ast\unittest\emit\EmittingTest;
 use lang\{IllegalArgumentException, XPClass};
-use unittest\{Assert, Expect, Test, Values};
+use test\{Assert, Expect, Test, Values};
 use util\Objects;
 
 class RecordsTest extends EmittingTest {
@@ -27,7 +27,7 @@ class RecordsTest extends EmittingTest {
     Assert::equals(XPClass::forName('lang.ast.Node'), $t->getParentClass());
   }
 
-  #[Test, Expect(['class' => Errors::class, 'withMessage' => '/Records cannot have a constructor/'])]
+  #[Test, Expect(class: Errors::class, message: '/Records cannot have a constructor/')]
   public function cannot_have_constructor() {
     $this->type('record <T>(int $id) {
       public function __construct() { }
@@ -52,7 +52,7 @@ class RecordsTest extends EmittingTest {
     Assert::equals(MODIFIER_PUBLIC | MODIFIER_READONLY, $t->getField('name')->getModifiers());
   }
 
-  #[Test, Expect(class: Error::class, withMessage: '/Cannot modify readonly property .+name/')]
+  #[Test, Expect(class: Error::class, message: '/Cannot modify readonly property .+name/')]
   public function writing_to_readonly_field() {
     $t= $this->type('record <T>(public readonly string $name) { }');
     $t->newInstance('Test')->name= 'Modified';
@@ -186,7 +186,7 @@ class RecordsTest extends EmittingTest {
     \xp::gc();
   }
 
-  #[Test, Expect(class: IllegalArgumentException::class, withMessage: 'lo > hi!')]
+  #[Test, Expect(class: IllegalArgumentException::class, message: 'lo > hi!')]
   public function can_verify() {
     $t= $this->type('record <T>(int $lo, int $hi) {
       init {
@@ -225,7 +225,7 @@ class RecordsTest extends EmittingTest {
     }));
   }
 
-  #[Test, Expect(class: Error::class, withMessage: '/Argument.+must.+callable/')]
+  #[Test, Expect(class: Error::class, message: '/Argument.+must.+callable/')]
   public function destructure_with_incorrect_mapper() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
     $p('not.callable');
