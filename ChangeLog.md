@@ -5,6 +5,8 @@ XP records for PHP - ChangeLog
 
 ## 2.5.0 / 2023-05-27
 
+* Merged PR #9: Implement anonymous records, which were equested in #5
+  (@thekid)
 * Removed support for deprecated `__init()` methods, see PR #8 and
   https://github.com/xp-lang/xp-records/releases/tag/v2.2.0
   (@thekid)
