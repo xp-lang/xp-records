@@ -1,8 +1,8 @@
 <?php namespace lang\ast\syntax\php\unittest;
 
-use lang\Error;
 use lang\ast\Errors;
 use lang\ast\unittest\emit\EmittingTest;
+use lang\{Error, Value};
 use lang\{IllegalArgumentException, XPClass};
 use test\{Assert, Expect, Test, Values};
 use util\Objects;
@@ -200,5 +200,16 @@ class RecordsTest extends EmittingTest {
   public function destructure_with_incorrect_mapper() {
     $p= $this->type('record <T>(int $x, int $y) { }')->newInstance(1, 10);
     $p('not.callable');
+  }
+
+  #[Test]
+  public function anonymous_record() {
+    $p= $this->run('class <T> {
+      public function run() {
+        return new record(name: "Timm", age: 44) { };
+      }
+    }');
+    Assert::equals('record(name: "Timm", age: 44)', $p->toString());
+    Assert::instance(Value::class, $p);
   }
 }

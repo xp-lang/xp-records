@@ -3,8 +3,11 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
-* Removed deprecated `__init()` function in favor of `init { }`
-  blocks see PR #8 and 
+## 2.5.0 / 2023-05-27
+
+* Removed support for deprecated `__init()` methods, see PR #8 and
+  https://github.com/xp-lang/xp-records/releases/tag/v2.2.0
+  (@thekid)
 
 ## 2.4.0 / 2022-12-04
 
