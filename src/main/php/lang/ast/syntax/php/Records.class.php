@@ -58,7 +58,7 @@ class Records implements Extension {
 
       // Type body
       $parse->expecting('{', 'record');
-      $body= $this->typeBody($parse, $type);
+      $body= $this->typeBody($parse, null); // BC: Pass deprecated holder
       $parse->expecting('}', 'record');
 
       if (isset($body['__construct()'])) {
@@ -69,7 +69,7 @@ class Records implements Extension {
     });
 
     // Initializer block
-    $language->body('init', function($parse, &$body, $meta, $modifiers, $holder) {
+    $language->body('init', function($parse, &$body, $meta, $modifiers) {
       $line= $parse->token->line;
       $parse->forward();
 
@@ -107,18 +107,12 @@ class Records implements Extension {
         $value.= ', $value->'.$c->name;
       }
 
-      // Create constructor, inlining <init>. Also support deprecated __init() function
+      // Create constructor, inlining <init>.
       if (isset($body['<init>'])) {
         foreach ($body['<init>'] as $statement) {
           $constructor->body[]= $statement;
         }
         unset($body['<init>']);
-      } else if (isset($body['__init()'])) {
-        trigger_error('Use init { } instead', E_USER_DEPRECATED);
-        foreach ($body['__init()']->body as $statement) {
-          $constructor->body[]= $statement;
-        }
-        unset($body['__init()']);
       }
       $body['__construct()']= $constructor;
 

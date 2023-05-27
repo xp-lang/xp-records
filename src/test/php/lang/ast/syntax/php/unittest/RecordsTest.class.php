@@ -157,35 +157,6 @@ class RecordsTest extends EmittingTest {
     Assert::true($t->newInstance(1, 2)->initialized);
   }
 
-  /** @deprecated */
-  #[Test]
-  public function can_have_init_function() {
-    $t= $this->type('record <T>(int $lo, int $hi) {
-      public $initialized= false;
-
-      public function __init() {
-        $this->initialized= true;
-      }
-    }');
-    Assert::true($t->newInstance(1, 2)->initialized);
-    \xp::gc();
-  }
-
-  /** @deprecated */
-  #[Test]
-  public function init_function_does_not_conflict_with_initializer_block() {
-    $t= $this->type('record <T>(int $lo, int $hi) {
-      public static $NONE= new self(0, 0); // Run inside initializer block "__init"
-      public $initialized= false;
-
-      public function __init() {
-        $this->initialized= true;
-      }
-    }');
-    Assert::true($t->getField('NONE')->get(null)->initialized);
-    \xp::gc();
-  }
-
   #[Test, Expect(class: IllegalArgumentException::class, message: 'lo > hi!')]
   public function can_verify() {
     $t= $this->type('record <T>(int $lo, int $hi) {
