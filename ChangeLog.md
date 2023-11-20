@@ -3,9 +3,11 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+* Added PHP 8.4 to the test matrix - @thekid
+
 ## 2.5.0 / 2023-05-27
 
-* Merged PR #9: Implement anonymous records, which were equested in #5
+* Merged PR #9: Implement anonymous records as requested in #5
   (@thekid)
 * Removed support for deprecated `__init()` methods, see PR #8 and
   https://github.com/xp-lang/xp-records/releases/tag/v2.2.0
