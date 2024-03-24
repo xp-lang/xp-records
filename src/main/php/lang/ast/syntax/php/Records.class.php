@@ -15,7 +15,7 @@ use lang\ast\nodes\{
   Variable
 };
 use lang\ast\syntax\Extension;
-use lang\ast\types\{IsArray, IsLiteral, IsValue};
+use lang\ast\types\{IsArray, IsLiteral, IsValue, IsNullable};
 
 class Records implements Extension {
 
@@ -74,7 +74,7 @@ class Records implements Extension {
     ));
 
     // Add decomposition
-    self::inject($body, '__invoke', new Signature([new Parameter('map', new IsLiteral('callable'), new Literal('null'))], null), new Code(
+    self::inject($body, '__invoke', new Signature([new Parameter('map', new IsNullable(new IsLiteral('callable')), new Literal('null'))], null), new Code(
       'null === $map ? ['.substr($object, 2).'] : $map('.substr($object, 2).')'
     ));
 
