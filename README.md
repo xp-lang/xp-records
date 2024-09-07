@@ -6,7 +6,7 @@ XP records for PHP
 [![BSD Licence](https://raw.githubusercontent.com/xp-framework/web/master/static/licence-bsd.png)](https://github.com/xp-framework/core/blob/master/LICENCE.md)
 [![Requires PHP 7.4+](https://raw.githubusercontent.com/xp-framework/web/master/static/php-7_4plus.svg)](http://php.net/)
 [![Supports PHP 8.0+](https://raw.githubusercontent.com/xp-framework/web/master/static/php-8_0plus.svg)](http://php.net/)
-[![Latest Stable Version](https://poser.pugx.org/xp-lang/xp-records/version.png)](https://packagist.org/packages/xp-lang/xp-records)
+[![Latest Stable Version](https://poser.pugx.org/xp-lang/xp-records/version.svg)](https://packagist.org/packages/xp-lang/xp-records)
 
 Plugin for the [XP Compiler](https://github.com/xp-framework/compiler/) which adds a `record` syntax to the PHP language. Records declare a final class with immutable components for each of its members and appropriate accessors and a constructor, which implements the `lang.Value` interface.
 
