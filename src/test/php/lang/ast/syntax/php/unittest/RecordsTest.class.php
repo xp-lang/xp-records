@@ -49,7 +49,9 @@ class RecordsTest extends EmittingTest {
   #[Test]
   public function can_have_readonly_fields() {
     $t= $this->declare('record %T(public readonly string $name) { }');
-    Assert::equals(MODIFIER_PUBLIC | MODIFIER_READONLY, $t->property('name')->modifiers()->bits());
+    $modifiers= $t->property('name')->modifiers();
+
+    Assert::true($modifiers->isPublic() && $modifiers->isReadonly());
   }
 
   #[Test, Expect(class: Error::class, message: '/Cannot modify readonly property .+name/')]
