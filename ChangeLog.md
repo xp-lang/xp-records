@@ -3,6 +3,10 @@ XP records for PHP - ChangeLog
 
 ## ?.?.? / ????-??-??
 
+## 3.1.0 / 2024-09-07
+
+* Fixed compatibility with newer AST and Compiler versions - @thekid
+
 ## 3.0.0 / 2022-03-24
 
 * Dropped support for PHP 7.0 - 7.3 - @thekid

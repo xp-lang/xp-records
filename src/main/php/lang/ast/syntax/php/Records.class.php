@@ -34,8 +34,15 @@ class Records implements Extension {
     foreach ($node->components as $c) {
       $l= $c->line;
 
-      $modifiers= null === $c->promote ? ['private'] : explode(' ', $c->promote);
+      if (null === $c->promote) {
+        $modifiers= ['private'];
+      } else if (is_array($c->promote)) {
+        $modifiers= $c->promote;
+      } else {
+        $modifiers= explode(' ', $c->promote);
+      }
       $c->promote= null;
+
       $signature->parameters[]= $c;
 
       // Assigment inside constructor
